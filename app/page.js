@@ -1,103 +1,260 @@
+"use client";
+
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { BarChart3, FileText, Mic, Sparkles } from "lucide-react";
 
-export default function Home() {
+export default function HomePage() {
+  const { user } = useUser();
+  const router = useRouter();
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <main className="flex flex-col min-h-screen">
+      {/* NAVBAR */}
+      <header className="w-full flex justify-between items-center px-8 py-4 bg-white shadow-lg z-50 fixed top-0 backdrop-blur-sm bg-white/90 transition-colors duration-300 hover:bg-white">
+        <div
+          className="text-xl font-extrabold text-yellow-600 cursor-pointer select-none drop-shadow-md hover:text-yellow-700 transition-colors duration-300"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          role="button"
+          tabIndex={0}
+          aria-label="Go to top"
+        >
+          🤖 MockMate
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <nav className="flex gap-8 items-center">
+          <button
+            onClick={() =>
+              document
+                .getElementById("about-section")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="text-gray-700 font-medium hover:text-yellow-600 transition-colors duration-300"
+          >
+            About Us
+          </button>
+          <Button
+            className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
+            onClick={() => router.push(user ? "/dashboard" : "/sign-in")}
+          >
+            Get Started
+          </Button>
+        </nav>
+      </header>
+
+      {/* HERO SECTION */}
+      <section className="flex-1 pt-24 pb-16 relative text-white bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-15 bg-cover bg-center animate-fade-in"
+          style={{ backgroundImage: `url('/carousel-1.jpg')` }}
+        ></div>
+
+        {/* Glowing blurred circle */}
+        <div
+          aria-hidden="true"
+          className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-yellow-300 opacity-30 blur-3xl animate-pulse"
+        ></div>
+
+        <div className="relative z-10 max-w-4xl mx-auto text-center px-4 py-32">
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight drop-shadow-xl">
+            Practice Smart.{" "}
+            <span className="text-yellow-300 underline decoration-yellow-400 decoration-4 underline-offset-8">
+              Interview Better.
+            </span>
+          </h1>
+          <p className="text-xl md:text-2xl mb-6 text-white/90 drop-shadow-md">
+            AI-generated interviews tailored to your job role, experience, and
+            goals. Record, review, and get feedback instantly.
+          </p>
+          <Button
+            onClick={() => router.push(user ? "/dashboard" : "/sign-in")}
+            className="bg-white text-yellow-600 font-semibold px-8 py-4 rounded-full shadow-2xl hover:shadow-[0_10px_25px_rgba(250,204,21,0.6)] hover:bg-yellow-50 transition duration-300 ease-in-out transform hover:-translate-y-1"
+          >
+            Start Practicing
+          </Button>
+        </div>
+      </section>
+
+      {/* ABOUT SECTION */}
+      <section id="about-section" className="w-full bg-white py-20 px-6">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            src="/tech1.jpg"
+            alt="AI Interview Mock"
+            width={500}
+            height={400}
+            className="rounded-xl shadow-lg"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+          <div className="space-y-5">
+            <h2 className="text-3xl font-bold text-gray-800">
+              Built for Interview Success
+            </h2>
+            <p className="text-gray-600 text-lg">
+              MockMate generates 5 interview questions tailored to your job
+              title, description, and experience. Use your camera and mic to
+              simulate real interviews and receive actionable AI feedback on
+              your responses.
+            </p>
+            <ul className="list-disc list-inside text-gray-700">
+              <li>AI-curated interview questions</li>
+              <li>Real-time video/audio practice</li>
+              <li>Automated feedback & performance tracking</li>
+            </ul>
+          </div>
+
+          <div className="space-y-5">
+            <h2 className="text-3xl font-bold text-gray-800">
+              Your AI Interview Coach
+            </h2>
+            <p className="text-gray-600 text-lg">
+              Whether you're preparing for your first job or your dream role,
+              our platform helps you refine answers, boost confidence, and
+              review past performances to improve over time.
+            </p>
+            <ul className="list-disc list-inside text-gray-700">
+              <li>Custom feedback on delivery & clarity</li>
+              <li>Unlimited mock sessions</li>
+              <li>Progress tracking dashboard</li>
+            </ul>
+          </div>
           <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+            src="/tech2.jpg"
+            alt="Interview Practice"
+            width={500}
+            height={400}
+            className="rounded-xl shadow-lg"
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        </div>
+      </section>
+
+      {/* NEW SECTION: HOW IT WORKS */}
+      <section className="bg-gray-50 py-20 px-6">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-4xl font-bold text-gray-800 mb-12">
+            How It Works
+          </h2>
+          <div className="grid md:grid-cols-4 gap-8">
+            <div className="bg-white shadow-md rounded-xl p-6">
+              <h3 className="text-xl font-semibold text-yellow-600 mb-2">
+                1. Select Job
+              </h3>
+              <p className="text-gray-600">
+                Enter job position, description, and experience to generate a
+                tailored interview.
+              </p>
+            </div>
+            <div className="bg-white shadow-md rounded-xl p-6">
+              <h3 className="text-xl font-semibold text-yellow-600 mb-2">
+                2. Start Interview
+              </h3>
+              <p className="text-gray-600">
+                Answer 5 AI-generated questions using your webcam and mic like a
+                real interview.
+              </p>
+            </div>
+            <div className="bg-white shadow-md rounded-xl p-6">
+              <h3 className="text-xl font-semibold text-yellow-600 mb-2">
+                3. Get Feedback
+              </h3>
+              <p className="text-gray-600">
+                Receive instant AI feedback on your tone, clarity, and response
+                structure.
+              </p>
+            </div>
+            <div className="bg-white shadow-md rounded-xl p-6">
+              <h3 className="text-xl font-semibold text-yellow-600 mb-2">
+                4. Track & Improve
+              </h3>
+              <p className="text-gray-600">
+                Review past interviews, track progress, and refine your
+                performance over time.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS SECTION */}
+      <section className="bg-gray-50 py-20 px-6 border-t">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-gray-800 mb-10">
+            How It Works
+          </h2>
+          <div className="grid md:grid-cols-4 gap-10 text-left">
+            <div className="bg-white rounded-2xl p-6 shadow hover:shadow-md transition-all">
+              <div className="text-yellow-500 mb-4">
+                <FileText size={32} />
+              </div>
+              <h3 className="font-semibold text-lg text-gray-800 mb-2">
+                Enter Job Details
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Input job title, description, and years of experience to get
+                personalized interview questions.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 shadow hover:shadow-md transition-all">
+              <div className="text-yellow-500 mb-4">
+                <Mic size={32} />
+              </div>
+              <h3 className="font-semibold text-lg text-gray-800 mb-2">
+                Record Answers
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Turn on your mic and camera to simulate real interviews and
+                record your responses.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 shadow hover:shadow-md transition-all">
+              <div className="text-yellow-500 mb-4">
+                <Sparkles size={32} />
+              </div>
+              <h3 className="font-semibold text-lg text-gray-800 mb-2">
+                Get Smart Feedback
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Receive AI-generated feedback on your responses, tone, clarity,
+                and confidence.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 shadow hover:shadow-md transition-all">
+              <div className="text-yellow-500 mb-4">
+                <BarChart3 size={32} />
+              </div>
+              <h3 className="font-semibold text-lg text-gray-800 mb-2">
+                Track Your Progress
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Access a detailed dashboard of all past interviews,
+                improvements, and scores over time.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL CTA SECTION */}
+      <section className="bg-yellow-500 text-black py-16 px-6">
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          <h2 className="text-3xl font-bold">
+            Ready to boost your confidence?
+          </h2>
+          <p className="text-lg">
+            Start your first mock interview today and take a step closer to your
+            dream job.
+          </p>
+          <Button
+            onClick={() => router.push(user ? "/dashboard" : "/sign-in")}
+            className="bg-black text-white px-6 py-3 hover:bg-gray-800 font-semibold"
+          >
+            Start Now
+          </Button>
+        </div>
+      </section>
+    </main>
   );
 }
