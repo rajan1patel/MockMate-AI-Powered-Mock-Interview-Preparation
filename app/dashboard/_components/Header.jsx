@@ -17,7 +17,7 @@ const Header = () => {
   return (
     <div className='flex p-4 items-center justify-between bg-secondary shadow-sm'>
       {/* Logo */}
-      <div className="text-xl font-bold text-yellow-600">🤖 MockMate</div>
+      <div className="text-xl font-bold text-yellow-600 cursor-pointer" onClick={() => router.push('/dashboard')}>🤖 MockMate</div>
 
       {/* Navigation */}
       <ul className='hidden md:flex gap-6 ml-4'>

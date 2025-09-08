@@ -7,37 +7,43 @@ import { Inter } from "next/font/google";
 import React, { useEffect, useState } from "react";
 import InterviewItemCard from "./InterviewItemCard";
 
-
 function InterviewList() {
-    const { user } = useUser();
+  const { user } = useUser();
   const [InterviewList, setInterviewList] = useState([]);
   useEffect(() => {
     user && GetInterviewList();
   }, [user]);
+
   const GetInterviewList = async () => {
-    const result = await db
-      .select()
-      .from(MockInterview)
-      .where(
-        eq(MockInterview.createdBy, user?.primaryEmailAddress?.emailAddress)
+    const result = await db.select().from(MockInterview).where(eq(MockInterview.createdBy, user?.primaryEmailAddress?.emailAddress)
       )
       .orderBy(desc(MockInterview.id));
-      console.log(result);
+    console.log(result);
 
     setInterviewList(result);
   };
+  const handleDelete = async (mockId) => {
+    const result = await db.delete(MockInterview).where(eq(MockInterview.mockId, mockId));
+    console.log(result);
+    GetInterviewList();
+  };
+
   return (
     <div>
-        <h2 className='font-bold text-2xl'> Previous Mock  Interviews</h2>
+      <h2 className="font-bold text-2xl"> Previous Mock Interviews</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {InterviewList&&InterviewList.map((interview,index)=>(
-            <InterviewItemCard interview={interview} key={index}/>
-        ))}
-        </div>
-
-     </div>
-  )
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {InterviewList &&
+          InterviewList.map((interview, index) => (
+            <InterviewItemCard
+              interview={interview}
+              onDelete={handleDelete}
+              key={index}
+            />
+          ))}
+      </div>
+    </div>
+  );
 }
 
-export default InterviewList
+export default InterviewList;

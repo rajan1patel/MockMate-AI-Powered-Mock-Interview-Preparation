@@ -9,6 +9,9 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Webcam from 'react-webcam';
 
+
+
+
 const Page = ({ params }) => {
   const [interviewData, setInterviewData] = useState(null);
   const [webcamEnabled, setWebcamEnabled] = useState(false);

@@ -30,15 +30,16 @@ export default function HomePage() {
                 .getElementById("about-section")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
-            className="text-gray-700 font-medium hover:text-yellow-600 transition-colors duration-300"
+            className="text-gray-700 font-medium hover:text-yellow-600 transition-colors duration-300 cursor-pointer"
           >
-            About Us
+        
+  AboutUS
           </button>
           <Button
-            className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
+            className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
             onClick={() => router.push(user ? "/dashboard" : "/sign-in")}
           >
-            Get Started
+           {user ? "Dashboard" : "LOGIN"}
           </Button>
         </nav>
       </header>
@@ -69,9 +70,9 @@ export default function HomePage() {
           </p>
           <Button
             onClick={() => router.push(user ? "/dashboard" : "/sign-in")}
-            className="bg-white text-yellow-600 font-semibold px-8 py-4 rounded-full shadow-2xl hover:shadow-[0_10px_25px_rgba(250,204,21,0.6)] hover:bg-yellow-50 transition duration-300 ease-in-out transform hover:-translate-y-1"
+            className="bg-white text-yellow-600 font-semibold px-8 py-4 rounded-full shadow-2xl hover:shadow-[0_10px_25px_rgba(250,204,21,0.6)] hover:bg-yellow-50 transition duration-300 ease-in-out transform hover:-translate-y-1 cursor-pointer"
           >
-            Start Practicing
+           {user ? "Go to Dashboard" : "Get Started"}
           </Button>
         </div>
       </section>
