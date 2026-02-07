@@ -152,7 +152,6 @@
 
 import Webcam from "react-webcam";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Mic } from "lucide-react";
 import useSpeechToText from "react-hook-speech-to-text";
@@ -161,7 +160,7 @@ import { chatSession, getChatSession } from "@/utils/GeminiAIModal";
 import { UserAnswer } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
-import { db } from "@/utils/db"; // Make sure this path is correct
+import { db } from "@/utils/db"; 
 
 const RecordAnswerSection = ({
   mockInterviewQuestion,
@@ -276,13 +275,7 @@ useEffect(() => {
 
   return (
     <div className="flex items-center justify-center flex-col">
-      <div className="flex flex-col mt-10 gap-4 p-4 border justify-center items-center rounded-lg">
-        <Image
-          src="/next.svg" // Use relative public path
-          alt="Next Logo"
-          width={200}
-          height={200}
-        />
+      <div className="flex flex-col mt-10 gap-4 p-4 border justify-center items-center rounded-lg relative">
         <Webcam
           mirrored
           style={{

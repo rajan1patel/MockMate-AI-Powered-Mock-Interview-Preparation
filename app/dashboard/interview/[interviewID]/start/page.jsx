@@ -4,16 +4,22 @@ import { db } from "@/utils/db";
 import { MockInterview } from "@/utils/schema";
 import { eq } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import QuestionSection from "./_components/QuestionSection";
-import RecordAnswerSection from "./_components/RecordAnswerSection";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
+const RecordAnswerSection = dynamic(
+  () => import("./_components/RecordAnswerSection"),
+  { ssr: false }
+);
+
 
 const Page = ({ params }) => {
+  const { interviewID } = React.use(params);
   const [interviewData, setInterviewData] = useState(null);
   const [mockInterviewQuestion, setmockInterviewQuestion] = useState(null);
-  const [activeQuestionIndex, setActiveQuestionIndex] = useState(1);
+  const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
 
   useEffect(() => {
     const getInterviewDetails = async () => {
@@ -21,7 +27,7 @@ const Page = ({ params }) => {
         const result = await db
           .select()
           .from(MockInterview)
-          .where(eq(MockInterview.mockId, params.interviewID));
+          .where(eq(MockInterview.mockId, interviewID));
 
         if (!result || result.length === 0) {
           console.warn("No interview found with that ID.");
@@ -29,17 +35,21 @@ const Page = ({ params }) => {
         }
 
         const jsonMockResp = JSON.parse(result[0].jsonMockResp);
-        setmockInterviewQuestion(jsonMockResp);
+        // Handle both array and object with questions property
+        const questions = Array.isArray(jsonMockResp) 
+          ? jsonMockResp 
+          : jsonMockResp?.questions || [];
+        setmockInterviewQuestion(questions);
         setInterviewData(result[0]);
       } catch (error) {
         console.error("Error fetching interview data:", error);
       }
     };
 
-    if (params?.interviewID) {
+    if (interviewID) {
       getInterviewDetails();
     }
-  }, [params?.interviewID]);
+  }, [interviewID]);
 
   return (
     <div>

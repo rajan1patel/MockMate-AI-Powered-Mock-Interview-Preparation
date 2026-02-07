@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <main className="flex flex-col min-h-screen">
       {/* NAVBAR */}
-      <header className="w-full flex justify-between items-center px-8 py-4 bg-white shadow-lg z-50 fixed top-0 backdrop-blur-sm bg-white/90 transition-colors duration-300 hover:bg-white">
+      <header className="w-full flex justify-between items-center px-8 py-4 bg-white shadow-lg z-50 fixed top-0 backdrop-blur-sm bg-white transition-colors duration-300 hover:bg-white">
         <div
           className="text-xl font-extrabold text-yellow-600 cursor-pointer select-none drop-shadow-md hover:text-yellow-700 transition-colors duration-300"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

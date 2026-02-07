@@ -34,7 +34,16 @@ function InterviewPrep() {
     setLoading(true);
 
     try {
-      const prompt = `Job position is ${jobPosition}, job description is ${jobDesc}, and years of experience is ${jobExperience}. Please provide 10 interview questions and answers in JSON format based on this role. Include technical, problem-solving, and behavioral questions.`;
+      const prompt = `Job position: ${jobPosition}, Job description: ${jobDesc}, Years of experience: ${jobExperience}.
+Generate 10 interview questions with answers in JSON format. Include technical, problem-solving, and behavioral questions.
+Use this exact structure:
+[
+  {
+    "question": "Your question here?",
+    "answer": "Expected answer here"
+  }
+]
+Return only the JSON array, no additional text.`;
 
       const chatSession = await getChatSession();
       const result = await chatSession.sendMessage(prompt);
@@ -55,7 +64,16 @@ function InterviewPrep() {
   const loadMoreQuestions = async () => {
     setLoading(true);
     try {
-      const prompt = `Job position is ${jobPosition}, job description is ${jobDesc}, and years of experience is ${jobExperience}. Provide 5 *new and unique* interview questions and answers in JSON format.`;
+      const prompt = `Job position: ${jobPosition}, Job description: ${jobDesc}, Years of experience: ${jobExperience}.
+Generate 5 new and unique interview questions with answers in JSON format.
+Use this exact structure:
+[
+  {
+    "question": "Your question here?",
+    "answer": "Expected answer here"
+  }
+]
+Return only the JSON array, no additional text.`;
 
       const chatSession = await getChatSession();
       const result = await chatSession.sendMessage(prompt);

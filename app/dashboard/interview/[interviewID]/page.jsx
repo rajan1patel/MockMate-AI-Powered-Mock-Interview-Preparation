@@ -13,21 +13,22 @@ import Webcam from 'react-webcam';
 
 
 const Page = ({ params }) => {
+  const { interviewID } = React.use(params);
   const [interviewData, setInterviewData] = useState(null);
   const [webcamEnabled, setWebcamEnabled] = useState(false);
 
   useEffect(() => {
-    if (params?.interviewID) {
+    if (interviewID) {
       getInterviewDetails();
     }
-  }, [params?.interviewID]);
+  }, [interviewID]);
 
   const getInterviewDetails = async () => {
     try {
       const result = await db
         .select()
         .from(MockInterview)
-        .where(eq(MockInterview.mockId, params.interviewID));
+        .where(eq(MockInterview.mockId, interviewID));
 
       console.log('Interview Data:', result);
       setInterviewData(result[0]);
@@ -77,7 +78,7 @@ const Page = ({ params }) => {
           </>
         )}
         <div className='flex justify-end items-end mt-5'>
-            <Link href={`/dashboard/interview/${params.interviewID}/start`}>
+            <Link href={`/dashboard/interview/${interviewID}/start`}>
             <Button >Start Interview</Button>
             </Link>
         </div>

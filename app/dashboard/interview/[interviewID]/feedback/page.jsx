@@ -22,7 +22,7 @@ const page = ({ params }) => {
     const result = await db
       .select()
       .from(UserAnswer)
-      .where(eq(UserAnswer.mockIdRef, params.interviewID))
+      .where(eq(UserAnswer.mockIdRef, interviewID))
       .orderBy(desc(UserAnswer.createdAt));
     console.log(result);
     setFeedbackList(result);
