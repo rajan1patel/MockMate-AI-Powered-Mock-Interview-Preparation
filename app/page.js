@@ -109,7 +109,7 @@ export default function HomePage() {
               Your AI Interview Coach
             </h2>
             <p className="text-gray-600 text-lg">
-              Whether you're preparing for your first job or your dream role,
+              Whether you&apos;re preparing for your first job or your dream role,
               our platform helps you refine answers, boost confidence, and
               review past performances to improve over time.
             </p>
